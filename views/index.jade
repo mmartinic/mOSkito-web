@@ -1,5 +1,36 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  #map
+  script(type="text/javascript").
+    var DEFAULT_COORDS = {
+      lat: 45.5575,
+      long: 18.6796
+    };
+    var mapCanvas = document.getElementById('map');
+    var mapOptions = {
+      zoom: 14,
+      draggable: false,
+      streetViewControl: false,
+      mapTypeControl: false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map;
+
+    var successHandler = function successHandler(position){
+      mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      map = new google.maps.Map(mapCanvas, mapOptions);
+      map.set('styles', mapStyle);
+    };
+
+    var failHandler = function failHandler(){
+      mapOptions.center = new google.maps.LatLng(DEFAULT_COORDS.lat,  DEFAULT_COORDS.long);
+      map = new google.maps.Map(mapCanvas, mapOptions);
+      map.set('styles', mapStyle);
+      console.log(mapOptions);
+    };
+
+    navigator.geolocation.getCurrentPosition(successHandler, failHandler);
+
+
+

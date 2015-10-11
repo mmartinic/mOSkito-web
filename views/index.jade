@@ -32,7 +32,7 @@ block content
     navigator.geolocation.getCurrentPosition(successHandler, failHandler);
 
   script(type="text/javascript").
-    var moskitoApi = 'https://moskito-api.herokuapp.com';
+    var moskitoApi = 'https://moskito-web.herokuapp.com/proxy';
     var socket = io(moskitoApi);
     socket.on('bite', function (data) {
       biteMarkers(map, data);

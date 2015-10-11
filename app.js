@@ -1,4 +1,5 @@
 var express = require('express');
+var proxy = require('express-http-proxy');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -22,7 +23,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+
+app.use('/proxy', proxy('https://moskito-api.herokuapp.com', {
+  forwardPath: function(req, res) {
+    return require('url').parse(req.url).path;
+  }
+}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

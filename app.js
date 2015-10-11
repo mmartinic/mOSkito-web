@@ -10,7 +10,6 @@ var users = require('./routes/users');
 
 var app = express();
 process.env.PWD = process.cwd();
-// view engine setup
 app.set('views', path.join(process.env.PWD, 'views'));
 app.set('view engine', 'jade');
 app.set('port', (process.env.PORT || 3000));
